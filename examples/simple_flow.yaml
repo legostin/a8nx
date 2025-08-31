@@ -1,0 +1,75 @@
+name: Simple Flow
+version: 0.0.1
+
+on:
+  workflow_dispatch:
+    inputs:
+      print_var: "Hello World!"
+
+jobs:
+  - id: print_hello_message
+    steps:
+      # Simple Print
+      - id: print_message
+        uses: \A8nx\Actions\Console\PrintAction
+        with:
+          message: "variable print_var: ${inputs.print_var}"
+      # pipeline operations
+      - id: print_message_2
+        uses: \A8nx\Actions\Console\PrintAction
+        needs:
+          - print_message
+        with:
+          message: "variable print_var: ${inputs.print_var_does_not_exist | default('empty')}"
+
+      # another pipeline
+      - id: print_message_3
+        uses: \A8nx\Actions\Console\PrintAction
+        with:
+          message: "length: ${inputs.print_var | length}"
+          type: "error"
+
+      - id: readFile
+        uses: \A8nx\Actions\File\ReadAction
+        with:
+          path: "examples/data.txt"
+      - id: printFile
+        uses: \A8nx\Actions\Console\PrintAction
+        with:
+          message: "${step.readFile}"
+      - id: readJson
+        uses: \A8nx\Actions\File\Json\ReadAction
+        with:
+          path: "examples/data.json"
+      - id: printFile2
+        uses: \A8nx\Actions\Console\PrintAction
+        with:
+          message: "${step.readJson.decoded.items.1.message}"
+
+      - id: writeFile
+        uses: \A8nx\Actions\File\WriteAction
+        with:
+          path: "/tmp/writeFile.txt"
+          content: "${step.readJson.decoded.items.0.message}"
+          append: true
+
+  - id: workWithCsv
+    needs:
+      - print_hello_message
+    steps:
+      - id: loadCsv
+        uses: \A8nx\Actions\File\CSV\ReadAction
+        with:
+          path: "examples/data.csv"
+          has_header: true
+      - id: printDataCsv
+        uses: \A8nx\Actions\Console\PrintAction
+        with:
+          message: "${step.loadCsv.rows}"
+      - id: writeDataCsv
+        uses: \A8nx\Actions\File\CSV\WriteAction
+        with:
+          path: "examples/date_edited.csv"
+          rows: "${step.loadCsv.rows}"
+
+

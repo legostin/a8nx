@@ -1,0 +1,20 @@
+{
+  "name": "a8nx/stub-lib",
+  "description": "A stub Composer library for local development",
+  "type": "library",
+  "version": "0.1.0",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.1",
+    "symfony/yaml": "^7.3",
+    "symfony/console": "^7.3",
+    "psr/log": "^3.0",
+    "flow/jsonpath": "^0.5.0",
+    "symfony/expression-language": "^7.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "A8nx\\": "src/"
+    }
+  }
+}

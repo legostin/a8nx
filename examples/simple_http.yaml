@@ -1,0 +1,43 @@
+name: Simple Flow
+version: 0.0.1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  - id: print_hello_message
+    steps:
+      # Simple Print
+      - id: print_message
+        uses: \A8nx\Actions\Console\PrintAction
+        with:
+          message: "Test HTTP Requests"
+
+      # Simple Request With error
+      - id: make_simple_request_with_error
+        uses: \A8nx\Actions\Http\RequestAction
+        with:
+          url: "https://random-data-api.com"
+
+      # Simple Request Without error
+      - id: make_simple_request
+        uses: \A8nx\Actions\Http\RequestAction
+        with:
+          url: "https://api.jsoning.com/mock/public/products"
+
+      - id: print_simple_request_response
+        uses: \A8nx\Actions\Console\PrintAction
+        needs: ["make_simple_request"]
+        with:
+          message: "name: ${step.make_simple_request.decoded.0.name}"
+
+      - id: print_simple_request_response_foreach
+        uses: \A8nx\Actions\Console\PrintAction
+        forEach: "${step.make_simple_request.decoded}"
+        needs: ["make_simple_request"]
+        with:
+          message: "${item.iteration}. name: ${item.data.name}"
+
+
+
+
