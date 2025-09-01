@@ -39,5 +39,25 @@ jobs:
           message: "${item.iteration}. name: ${item.data.name}"
 
 
+      - id: print_simple_request_response_foreach_multiple_steps
+        forEach: "${step.make_simple_request.decoded}"
+        uses: \A8nx\Actions\Flow\MultiStepsAction
+        needs: ["make_simple_request"]
+        steps:
+          - id: print_name
+            uses: \A8nx\Actions\Console\PrintAction
+            with:
+              message: "${item.iteration}. name: ${item.data.name}"
+          - id: print_price
+            uses: \A8nx\Actions\Console\PrintAction
+            with:
+              message: "   price: ${item.data.price}"
+          - id: print_price_high
+            uses: \A8nx\Actions\Console\PrintAction
+            if: "${item.data.price} > 50"
+            with:
+              message: "   too high!!!"
+
+
 
 

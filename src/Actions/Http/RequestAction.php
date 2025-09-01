@@ -8,7 +8,7 @@ use A8nx\Context\Context;
 class RequestAction implements ActionInterface
 {
 
-    public function execute(array $params, Context & $context): array
+    public function execute(array $params, Context &$context, array $steps = []): array
     {
         // Validate required URL
         if (!isset($params['url'])) {

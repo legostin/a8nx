@@ -7,7 +7,7 @@ use A8nx\Context\Context;
 
 class WriteAction implements ActionInterface
 {
-    public function execute(array $params, Context &$context): array
+    public function execute(array $params, Context &$context, array $steps = []): array
     {
 		$target = $params['path'] ?? null;
 

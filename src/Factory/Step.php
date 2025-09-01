@@ -9,9 +9,18 @@ class Step
         $step->setId($stepRawData['id']);
         $action = new $stepRawData['uses'];
         $step->setAction($action);
-        $step->setWith($stepRawData['with']);
+        $step->setWith($stepRawData['with'] ?? []);
         $step->setForEach($stepRawData['forEach'] ?? null);
         $step->setNeeds($stepRawData['needs'] ?? []);
+        if (!empty($stepRawData['steps'])) {
+            $steps = [];
+            foreach ($stepRawData['steps'] as $stepRawStep) {
+                $steps[] = Step::parse($stepRawStep);
+            }
+            $step->setSteps($steps);
+        }
+
+        $step->setCondition($stepRawData['if'] ?? null);
         return $step;
     }
 }

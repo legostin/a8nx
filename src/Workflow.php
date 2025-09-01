@@ -32,8 +32,8 @@ class Workflow
         $this->name = $name;
         $this->jobs = $jobs;
         $this->version = $version;
-        $this->context = new Context();
         $this->runId = uniqid();
+        $this->context = new Context($this->runId);
     }
 
     public function fillContext(array $rawData) {

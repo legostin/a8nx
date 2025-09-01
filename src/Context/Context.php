@@ -12,6 +12,11 @@ class Context
     private ?OutputInterface $output = null;
     private ?LoggerInterface $logger = null;
 
+    public function __construct(string $runId)
+    {
+        $this->set('workflow.runId', $runId);
+    }
+
     public function set(string $key, $value): void
     {
         $segments = $this->parseKeyToSegments($key);

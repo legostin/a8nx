@@ -8,7 +8,7 @@ use A8nx\Context\Context;
 class ReadAction implements ActionInterface
 {
 
-    public function execute(array $params, Context &$context): array
+    public function execute(array $params, Context &$context, array $steps = []): array
     {
         if (!isset($params['path'])) {
             throw new \InvalidArgumentException('Path parameter is required');
