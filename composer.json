@@ -1,6 +1,6 @@
 {
   "name": "legostin/a8nx",
-  "description": "A stub Composer library for local development",
+  "description": "Minimalistic Workflow engine for PHP",
   "type": "library",
   "version": "0.1.0",
   "license": "MIT",
